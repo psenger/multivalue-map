@@ -1,0 +1,59 @@
+{
+  "name": "@psenger/multivalue-map",
+  "version": "1.0.0",
+  "description": "Multi Value Map for NodeJS",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=10"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest --coverage --verbose src",
+    "test:cover": "jest src --coverage",
+    "test:lint": "eslint src",
+    "test:updatesnapshot": "jest --updateSnapshot",
+    "build": "rollup --config",
+    "prebuild": "npm run clean",
+    "clean": "rimraf coverage dist",
+    "docs": "documentation build src -f html --github -o docs",
+    "precommit": "npm test:lint && npm test",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags && rm -rf build/temp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psenger/multivalue-map.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "keywords": [
+    "multivaluemap",
+    "multivalue",
+    "multi-value-map",
+    "multi-value",
+    "bucket",
+    "map",
+    "adt"
+  ],
+  "author": "Philip A Senger <philip.a.senger@cngrgroup.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/psenger/multivalue-map/issues"
+  },
+  "homepage": "https://github.com/psenger/multivalue-map#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "documentation": "^13.2.5",
+    "eslint": "^7.30.0",
+    "jest": "^27.0.6",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.53.1"
+  }
+}
