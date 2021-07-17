@@ -49,6 +49,7 @@
   },
   "homepage": "https://github.com/psenger/multivalue-map#readme",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^19.0.1",
     "@types/jest": "^26.0.24",
     "documentation": "^13.2.5",
     "eslint": "^7.30.0",
