@@ -60,5 +60,16 @@ console.log( value ) // ['Carol Danvers']
 
 #### Parameters
 
+## Deployment
+
+The steps I use to deploy a new version
+`
+pr the code to `main`
+check out `main`
+npm version patch -m "message here" or minor
+npm publish
+then pull dev
+and merge main into dev and push
+`
 
 ## License
