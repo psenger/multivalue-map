@@ -6,19 +6,29 @@
 // import url from 'rollup-plugin-url'
 // import svgr from '@svgr/rollup'
 
+import commonjs from '@rollup/plugin-commonjs';
+
 import pkg from './package.json'
 
-module.exports = {
+/**
+ * @type {import('rollup').RollupOptions}
+ */
+const config = {
   input: './src/com/cngr/multivaluemap/index.js',
   output: [
     {
       file: pkg.main,
       format: 'cjs',
-      sourcemap: true
+      sourcemap: true,
+      exports: 'default',
     }
   ],
-  plugins: []
+  plugins: [commonjs({
+    extensions: [ '.js' ],
+  })],
 };
+
+export default config;
 
 // export default {
 //   input: 'src/index.js',

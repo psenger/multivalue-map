@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2019, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
  */
-const MultiValueMap = require('./index')
+'use strict'
+const {MultiValueMap, Collection} = require('./index');
+const {SetCollection,ArrayCollection} = Collection;
+
 describe('MultiValueMap', () => {
   describe('constructor should not throw an exception', () => {
     [
@@ -18,6 +21,26 @@ describe('MultiValueMap', () => {
           }).not.toThrow()
         })
       })
+  })
+  describe('constructor with Set',() => {
+    const fixture = new MultiValueMap(undefined, { valueType: SetCollection })
+    fixture.setAll('A', [ 1, 2, 2, 4] )
+    expect(fixture.get('A') ).toEqual([1,2,4]);
+  })
+  describe('SetCollection with un mapped value return null',() => {
+    const fixture = new MultiValueMap(undefined, { valueType: SetCollection })
+    fixture.setAll('A', [ 1, 2, 2, 4] )
+    expect(fixture.get('B') ).toBeNull();
+  })
+  describe('constructor with Set',() => {
+    const fixture = new MultiValueMap(undefined, { valueType: ArrayCollection })
+    fixture.setAll('A', [ 1, 2, 2, 4] )
+    expect(fixture.get('A') ).toEqual([ 1, 2, 2, 4]);
+  })
+  describe('SetCollection with un mapped value return null',() => {
+    const fixture = new MultiValueMap(undefined, { valueType: ArrayCollection })
+    fixture.setAll('A', [ 1, 2, 2, 4] )
+    expect(fixture.get('B') ).toBeNull();
   })
   describe('constructor should throw an exception', () => {
     [
@@ -300,7 +323,7 @@ describe('MultiValueMap', () => {
           fixture.set(key, value)
         })
       })
-      fixture.set('robot', null)
+      fixture.set('robot', null);
       for (const [key, value] of fixture) {
         switch (key) {
           case 'captain':
