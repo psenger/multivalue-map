@@ -1,5 +1,9 @@
 'use strict';
 
+/*
+ * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
+ */
+
 const isNill = (value) => value === null || value === undefined;
 const not = (fn) => (...args) => !fn(args);
 const isNotNill = not(isNill);
@@ -104,7 +108,7 @@ var Collection_1 = {
 };
 
 /*
- * Copyright (c) 2019, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
+ * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
  */
 
 const {ArrayCollection} = Collection_1;
@@ -258,6 +262,9 @@ var MultiValuedMap_1 = class MultiValuedMap {
   }
 };
 
+/*
+ * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
+ */
 const Collection = Collection_1;
 const MultiValueMap = MultiValuedMap_1;
 
