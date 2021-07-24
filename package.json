@@ -17,7 +17,7 @@
     "test:cover": "jest src --coverage",
     "test:lint": "eslint src",
     "test:updatesnapshot": "jest --updateSnapshot",
-    "build": "rollup --config",
+    "build": "rollup --config && npm run docs",
     "prebuild": "npm run clean",
     "clean": "rimraf coverage dist",
     "docs": "npm run docs:readme && npm run docs:html",
