@@ -4,12 +4,12 @@
 
 'use strict'
 
-const Collection = require('./Collection');
-const MultiValueMap = require('./MultiValuedMap');
+const Collection = require('./Collection')
+const MultiValueMap = require('./MultiValuedMap')
 
 module.exports = {
   MultiValueMap,
   ArrayCollection: Collection.ArrayCollection,
   SetCollection: Collection.SetCollection,
-  Collection: Collection.Collection,
+  Collection: Collection.Collection
 }

@@ -3,23 +3,21 @@
  */
 'use strict'
 
-const isNill = (value) => value === null || value === undefined;
+const isNill = (value) => value === null || value === undefined
 const not = (fn) => (...args) => !fn(...args)
-const isSet = not(isNill);
+const isSet = not(isNill)
 
 /**
  * Abstract class `Collection` must be implemented to be passed as the `option.valueType` in the
- * MulitValueMap class constructor. This abstract class defines the behavior of the values stored
+ * MultiValueMap class constructor. This abstract class defines the behavior of the values stored
  * in the MultiValueMap. When constructed, the `creator` parameter, a JavaScript Class,  will be
  * called with the `new` operator and stored in a private variable, a reference variable, called
  * `this._proxyObject`
  * @param {Class} creator - the class to construct internally
- * @version 1.1.1
  */
 class Collection {
-
-  constructor(creator) {
-    this._proxyObject = new creator();
+  constructor (creator) {
+    this._proxyObject = new creator()
   }
 
   /**
@@ -28,8 +26,8 @@ class Collection {
    * @abstract
    * @param {*} value - Passing the value as Null or Undefined are ignored.
    */
-  setValue(value) {
-    throw new Error("This method must be overwritten!");
+  setValue (value) {
+    throw new Error('This method must be overwritten!')
   }
 
   /**
@@ -37,16 +35,16 @@ class Collection {
    * @abstract
    * @returns {*[]} All sub classes return a shallow copy array of the values
    */
-  getValue() {
-    throw new Error("This method must be overwritten!");
+  getValue () {
+    throw new Error('This method must be overwritten!')
   }
 
   /**
    * Iterator
    * @abstract
    */
-  [Symbol.iterator]() {
-    throw new Error("This method must be overwritten!");
+  [Symbol.iterator] () {
+    throw new Error('This method must be overwritten!')
   }
 }
 
@@ -55,9 +53,8 @@ class Collection {
  * @constructor
  */
 class ArrayCollection extends Collection {
-
-  constructor() {
-    super(Array);
+  constructor () {
+    super(Array)
   }
 
   /**
@@ -65,10 +62,10 @@ class ArrayCollection extends Collection {
    * @augments Collection
    * @param {*} value - if you push null or undefined, it is ignored.
    */
-  setValue(value) {
-     if ( isSet(value) ) {
-       this._proxyObject.push(value)
-     }
+  setValue (value) {
+    if (isSet(value)) {
+      this._proxyObject.push(value)
+    }
   }
 
   /**
@@ -76,12 +73,12 @@ class ArrayCollection extends Collection {
    * @augments Collection
    * @return {*[]} - an array of objects.
    */
-  getValue() {
-    return [ ...this._proxyObject ];
+  getValue () {
+    return [...this._proxyObject]
   }
 
-  [Symbol.iterator]() {
-    return this._proxyObject[Symbol.iterator]();
+  [Symbol.iterator] () {
+    return this._proxyObject[Symbol.iterator]()
   }
 }
 
@@ -91,9 +88,8 @@ class ArrayCollection extends Collection {
  * @constructor
  */
 class SetCollection extends Collection {
-
-  constructor() {
-    super(Set);
+  constructor () {
+    super(Set)
   }
 
   /**
@@ -101,8 +97,8 @@ class SetCollection extends Collection {
    * @augments Collection
    * @param {*} value - if you push null or undefined, it is ignored.
    */
-  setValue(value) {
-    isSet(value) ? this._proxyObject.add(value) : undefined;
+  setValue (value) {
+    isSet(value) ? this._proxyObject.add(value) : undefined
   }
 
   /**
@@ -110,18 +106,17 @@ class SetCollection extends Collection {
    * @augments Collection
    * @returns {*[]} All sub classes return an array of the values
    */
-  getValue() {
-    return Array.from(this._proxyObject);
+  getValue () {
+    return Array.from(this._proxyObject)
   }
 
-  [Symbol.iterator]() {
-    return this._proxyObject[Symbol.iterator]();
+  [Symbol.iterator] () {
+    return this._proxyObject[Symbol.iterator]()
   }
-
 }
 
 module.exports = {
   Collection,
   ArrayCollection,
-  SetCollection,
-};
+  SetCollection
+}

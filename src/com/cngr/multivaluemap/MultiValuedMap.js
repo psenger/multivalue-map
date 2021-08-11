@@ -4,7 +4,7 @@
 
 'use strict'
 
-const {ArrayCollection} = require("./Collection");
+const { ArrayCollection } = require('./Collection')
 
 /**
  * A MultiValuedMap constructor option
@@ -39,9 +39,8 @@ const {ArrayCollection} = require("./Collection");
  * const b = new MultiValueMap( null, { valueType: SetCollection });
  */
 class MultiValuedMap {
-
-  constructor(iterable, options = {} ) {
-    this._valueType = options?.valueType || ArrayCollection;
+  constructor (iterable, options = {}) {
+    this._valueType = options?.valueType || ArrayCollection
     this.map = new Map()
     if (iterable) {
       if (typeof iterable[Symbol.iterator] !== 'function') {
@@ -49,7 +48,7 @@ class MultiValuedMap {
       } else {
         for (const kvp of iterable) {
           if (typeof (kvp.entries) === 'undefined') {
-            throw new TypeError(`Iterator value a is not an entry object`)
+            throw new TypeError('Iterator value a is not an entry object')
           }
           const [key, values] = kvp
           if (Array.isArray(values)) {
@@ -73,7 +72,7 @@ class MultiValuedMap {
    * const mvm = new MultiValueMap(preData,{ valueType: SetCollection })
    * mvm.set('D', 'E')
    */
-  set(key, value) {
+  set (key, value) {
     const existingValue = this.map.get(key) || new this._valueType()
     existingValue.setValue(value)
     this.map.set(key, existingValue) // the only reason I need to do this, if the existingValue doesnt exist
@@ -89,11 +88,11 @@ class MultiValuedMap {
    * const mvm = new MultiValueMap(preData,{ valueType: SetCollection })
    * mvm.setAll('F',['G','H','H','H'])
    */
-  setAll(key, values = []) {
+  setAll (key, values = []) {
     if (typeof values[Symbol.iterator] !== 'function') {
-      throw new TypeError(`values is not iterable`)
+      throw new TypeError('values is not iterable')
     }
-    for(let value of values) {
+    for (const value of values) {
       this.set(key, value)
     }
     return this
@@ -110,7 +109,7 @@ class MultiValuedMap {
    * mvm.setAll('F',['G','H','H','H'])
    * console.log('mvm.size=', mvm.size); // mvm.size= 3
    */
-  get size() {
+  get size () {
     return this.map.size
   }
 
@@ -126,7 +125,7 @@ class MultiValuedMap {
    *   console.log('here');
    * }
    */
-  has(key) {
+  has (key) {
     return this.map.has(key)
   }
 
@@ -139,7 +138,7 @@ class MultiValuedMap {
    *   console.log('A was not deleted');
    * }
    */
-  delete(key) {
+  delete (key) {
     return this.map.delete(key)
   }
 
@@ -148,15 +147,15 @@ class MultiValuedMap {
    * @example
    * mvm.clear()
    */
-  clear() {
+  clear () {
     this.map.clear()
   }
 
   /**
    * Returns a new Iterator object that contains an array of [key, [value]] for each element in the Map object in insertion order.
-   * @returns {IterableIterator<K>}
+   * @returns {IterableIterator<*>}
    */
-  keys() {
+  keys () {
     return this.map.keys()
   }
 
@@ -165,7 +164,7 @@ class MultiValuedMap {
    * @return {IterableIterator<any>} - An iterable value, composed of what ever values or value
    * was inserted into the map.
    */
-  values() {
+  values () {
     return this.map.values()
   }
 
@@ -182,11 +181,11 @@ class MultiValuedMap {
    * for (let [key, values] of mvn.entries()) {
    *   console.log(key, values.getValue());
    * }
-   * > a [ '1', '2', '3' ]
-   * > b [ '4' ]
-   * > c [ '5', '6' ]
+   * // a [ '1', '2', '3' ]
+   * // b [ '4' ]
+   * // c [ '5', '6' ]
    */
-  entries() {
+  entries () {
     return this.map.entries()
   }
 
@@ -200,23 +199,23 @@ class MultiValuedMap {
    * const value = mvm.get('Captain Marvel')
    * console.log( value ) // ['Carol Danvers']
    */
-  get(key) {
-    return this.map.get(key)?.getValue() || null;
+  get (key) {
+    return this.map.get(key)?.getValue() || null
   }
 
-  forEach(callBackFunction, thisArg) {
+  forEach (callBackFunction, thisArg) {
     const cb = callBackFunction.bind(thisArg)
     const self = this
     this.map.forEach((value, key) => cb(value.getValue(), key, self), thisArg)
   }
 
-  [Symbol.iterator]() {
+  [Symbol.iterator] () {
     const iterator = this.map.keys()
     const getValue = key => {
       return this.map.get(key).getValue()
     }
     return {
-      next() {
+      next () {
         const { value: key, done } = iterator.next()
         if (done) {
           return { value: [], done: true }

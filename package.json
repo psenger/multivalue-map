@@ -13,16 +13,15 @@
     "dist"
   ],
   "scripts": {
+    "ci": "npm install --verbose && jest --ci --coverage && codecov",
     "test": "jest --coverage --verbose src",
     "test:cover": "jest src --coverage",
-    "test:lint": "eslint src",
+    "test:lint": "standard --fix \"src/com/cngr/multivaluemap/index.js\"",
     "test:updatesnapshot": "jest --updateSnapshot",
     "build": "rollup --config && npm run docs",
     "prebuild": "npm run clean",
     "clean": "rimraf coverage dist",
-    "docs": "npm run docs:readme && npm run docs:html",
-    "docs:readme": "node build-readme.js",
-    "docs:html": "documentation build src -f html --github -o docs",
+    "docs": "node build-readme.js",
     "precommit": "npm test:lint && npm test",
     "preversion": "npm test",
     "version": "npm run build && git add -A dist",
@@ -32,9 +31,7 @@
     "type": "git",
     "url": "git+https://github.com/psenger/multivalue-map.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
+  "private": false,
   "keywords": [
     "multivaluemap",
     "multivalue",
@@ -51,12 +48,13 @@
   },
   "homepage": "https://github.com/psenger/multivalue-map#readme",
   "devDependencies": {
+    "@psenger/markdown-fences": "^1.0.1",
     "@rollup/plugin-commonjs": "^19.0.1",
     "@types/jest": "^26.0.24",
-    "documentation": "^13.2.5",
-    "eslint": "^7.30.0",
+    "codecov": "^3.8.3",
     "jest": "^27.0.6",
     "rimraf": "^3.0.2",
-    "rollup": "^2.53.1"
+    "rollup": "^2.53.1",
+    "standard": "^16.0.3"
   }
 }
