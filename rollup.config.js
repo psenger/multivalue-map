@@ -6,7 +6,7 @@
 // import url from 'rollup-plugin-url'
 // import svgr from '@svgr/rollup'
 
-import commonjs from '@rollup/plugin-commonjs';
+import commonjs from '@rollup/plugin-commonjs'
 
 import pkg from './package.json'
 
@@ -20,15 +20,15 @@ const config = {
       file: pkg.main,
       format: 'cjs',
       sourcemap: true,
-      exports: 'default',
+      exports: 'default'
     }
   ],
   plugins: [commonjs({
-    extensions: [ '.js' ],
-  })],
-};
+    extensions: ['.js']
+  })]
+}
 
-export default config;
+export default config
 
 // export default {
 //   input: 'src/index.js',

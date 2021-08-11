@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
 /*
  * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
  */
 
-const isNill = (value) => value === null || value === undefined;
-const not = (fn) => (...args) => !fn(...args);
-const isSet = not(isNill);
+const isNill = (value) => value === null || value === undefined
+const not = (fn) => (...args) => !fn(...args)
+const isSet = not(isNill)
 
 /**
  * Abstract class `Collection` must be implemented to be passed as the `option.valueType` in the
@@ -18,9 +18,8 @@ const isSet = not(isNill);
  * @version 1.1.1
  */
 class Collection$1 {
-
-  constructor(creator) {
-    this._proxyObject = new creator();
+  constructor (creator) {
+    this._proxyObject = new creator()
   }
 
   /**
@@ -29,8 +28,8 @@ class Collection$1 {
    * @abstract
    * @param {*} value - Passing the value as Null or Undefined are ignored.
    */
-  setValue(value) {
-    throw new Error("This method must be overwritten!");
+  setValue (value) {
+    throw new Error('This method must be overwritten!')
   }
 
   /**
@@ -38,16 +37,16 @@ class Collection$1 {
    * @abstract
    * @returns {*[]} All sub classes return a shallow copy array of the values
    */
-  getValue() {
-    throw new Error("This method must be overwritten!");
+  getValue () {
+    throw new Error('This method must be overwritten!')
   }
 
   /**
    * Iterator
    * @abstract
    */
-  [Symbol.iterator]() {
-    throw new Error("This method must be overwritten!");
+  [Symbol.iterator] () {
+    throw new Error('This method must be overwritten!')
   }
 }
 
@@ -56,9 +55,8 @@ class Collection$1 {
  * @constructor
  */
 class ArrayCollection$1 extends Collection$1 {
-
-  constructor() {
-    super(Array);
+  constructor () {
+    super(Array)
   }
 
   /**
@@ -66,10 +64,10 @@ class ArrayCollection$1 extends Collection$1 {
    * @augments Collection
    * @param {*} value - if you push null or undefined, it is ignored.
    */
-  setValue(value) {
-     if ( isSet(value) ) {
-       this._proxyObject.push(value);
-     }
+  setValue (value) {
+    if (isSet(value)) {
+      this._proxyObject.push(value)
+    }
   }
 
   /**
@@ -77,12 +75,12 @@ class ArrayCollection$1 extends Collection$1 {
    * @augments Collection
    * @return {*[]} - an array of objects.
    */
-  getValue() {
-    return [ ...this._proxyObject ];
+  getValue () {
+    return [...this._proxyObject]
   }
 
-  [Symbol.iterator]() {
-    return this._proxyObject[Symbol.iterator]();
+  [Symbol.iterator] () {
+    return this._proxyObject[Symbol.iterator]()
   }
 }
 
@@ -92,9 +90,8 @@ class ArrayCollection$1 extends Collection$1 {
  * @constructor
  */
 class SetCollection extends Collection$1 {
-
-  constructor() {
-    super(Set);
+  constructor () {
+    super(Set)
   }
 
   /**
@@ -102,8 +99,8 @@ class SetCollection extends Collection$1 {
    * @augments Collection
    * @param {*} value - if you push null or undefined, it is ignored.
    */
-  setValue(value) {
-    isSet(value) ? this._proxyObject.add(value) : undefined;
+  setValue (value) {
+    isSet(value) ? this._proxyObject.add(value) : undefined
   }
 
   /**
@@ -111,27 +108,26 @@ class SetCollection extends Collection$1 {
    * @augments Collection
    * @returns {*[]} All sub classes return an array of the values
    */
-  getValue() {
-    return Array.from(this._proxyObject);
+  getValue () {
+    return Array.from(this._proxyObject)
   }
 
-  [Symbol.iterator]() {
-    return this._proxyObject[Symbol.iterator]();
+  [Symbol.iterator] () {
+    return this._proxyObject[Symbol.iterator]()
   }
-
 }
 
-var Collection_1 = {
+const Collection_1 = {
   Collection: Collection$1,
   ArrayCollection: ArrayCollection$1,
-  SetCollection,
-};
+  SetCollection
+}
 
 /*
  * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
  */
 
-const {ArrayCollection} = Collection_1;
+const { ArrayCollection } = Collection_1
 
 /**
  * A MultiValuedMap constructor option
@@ -166,25 +162,24 @@ const {ArrayCollection} = Collection_1;
  * const b = new MultiValueMap( null, { valueType: SetCollection });
  */
 class MultiValuedMap {
-
-  constructor(iterable, options = {} ) {
-    this._valueType = options?.valueType || ArrayCollection;
-    this.map = new Map();
+  constructor (iterable, options = {}) {
+    this._valueType = options?.valueType || ArrayCollection
+    this.map = new Map()
     if (iterable) {
       if (typeof iterable[Symbol.iterator] !== 'function') {
         throw new TypeError(`${iterable} is not iterable`)
       } else {
         for (const kvp of iterable) {
           if (typeof (kvp.entries) === 'undefined') {
-            throw new TypeError(`Iterator value a is not an entry object`)
+            throw new TypeError('Iterator value a is not an entry object')
           }
-          const [key, values] = kvp;
+          const [key, values] = kvp
           if (Array.isArray(values)) {
             values.forEach(value => {
-              this.set(key, value);
-            });
+              this.set(key, value)
+            })
           } else {
-            this.set(key, values);
+            this.set(key, values)
           }
         }
       }
@@ -200,10 +195,10 @@ class MultiValuedMap {
    * const mvm = new MultiValueMap(preData,{ valueType: SetCollection })
    * mvm.set('D', 'E')
    */
-  set(key, value) {
-    const existingValue = this.map.get(key) || new this._valueType();
-    existingValue.setValue(value);
-    this.map.set(key, existingValue); // the only reason I need to do this, if the existingValue doesnt exist
+  set (key, value) {
+    const existingValue = this.map.get(key) || new this._valueType()
+    existingValue.setValue(value)
+    this.map.set(key, existingValue) // the only reason I need to do this, if the existingValue doesnt exist
     return this
   }
 
@@ -216,12 +211,12 @@ class MultiValuedMap {
    * const mvm = new MultiValueMap(preData,{ valueType: SetCollection })
    * mvm.setAll('F',['G','H','H','H'])
    */
-  setAll(key, values = []) {
+  setAll (key, values = []) {
     if (typeof values[Symbol.iterator] !== 'function') {
-      throw new TypeError(`values is not iterable`)
+      throw new TypeError('values is not iterable')
     }
-    for(let value of values) {
-      this.set(key, value);
+    for (const value of values) {
+      this.set(key, value)
     }
     return this
   }
@@ -237,7 +232,7 @@ class MultiValuedMap {
    * mvm.setAll('F',['G','H','H','H'])
    * console.log('mvm.size=', mvm.size); // mvm.size= 3
    */
-  get size() {
+  get size () {
     return this.map.size
   }
 
@@ -253,7 +248,7 @@ class MultiValuedMap {
    *   console.log('here');
    * }
    */
-  has(key) {
+  has (key) {
     return this.map.has(key)
   }
 
@@ -266,7 +261,7 @@ class MultiValuedMap {
    *   console.log('A was not deleted');
    * }
    */
-  delete(key) {
+  delete (key) {
     return this.map.delete(key)
   }
 
@@ -275,15 +270,15 @@ class MultiValuedMap {
    * @example
    * mvm.clear()
    */
-  clear() {
-    this.map.clear();
+  clear () {
+    this.map.clear()
   }
 
   /**
    * Returns a new Iterator object that contains an array of [key, [value]] for each element in the Map object in insertion order.
    * @returns {IterableIterator<K>}
    */
-  keys() {
+  keys () {
     return this.map.keys()
   }
 
@@ -292,7 +287,7 @@ class MultiValuedMap {
    * @return {IterableIterator<any>} - An iterable value, composed of what ever values or value
    * was inserted into the map.
    */
-  values() {
+  values () {
     return this.map.values()
   }
 
@@ -313,7 +308,7 @@ class MultiValuedMap {
    * > b [ '4' ]
    * > c [ '5', '6' ]
    */
-  entries() {
+  entries () {
     return this.map.entries()
   }
 
@@ -327,24 +322,24 @@ class MultiValuedMap {
    * const value = mvm.get('Captain Marvel')
    * console.log( value ) // ['Carol Danvers']
    */
-  get(key) {
-    return this.map.get(key)?.getValue() || null;
+  get (key) {
+    return this.map.get(key)?.getValue() || null
   }
 
-  forEach(callBackFunction, thisArg) {
-    const cb = callBackFunction.bind(thisArg);
-    const self = this;
-    this.map.forEach((value, key) => cb(value.getValue(), key, self), thisArg);
+  forEach (callBackFunction, thisArg) {
+    const cb = callBackFunction.bind(thisArg)
+    const self = this
+    this.map.forEach((value, key) => cb(value.getValue(), key, self), thisArg)
   }
 
-  [Symbol.iterator]() {
-    const iterator = this.map.keys();
+  [Symbol.iterator] () {
+    const iterator = this.map.keys()
     const getValue = key => {
       return this.map.get(key).getValue()
-    };
+    }
     return {
-      next() {
-        const { value: key, done } = iterator.next();
+      next () {
+        const { value: key, done } = iterator.next()
         if (done) {
           return { value: [], done: true }
         }
@@ -354,21 +349,21 @@ class MultiValuedMap {
   }
 }
 
-var MultiValuedMap_1 = MultiValuedMap;
+const MultiValuedMap_1 = MultiValuedMap
 
 /*
  * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
  */
 
-const Collection = Collection_1;
-const MultiValueMap = MultiValuedMap_1;
+const Collection = Collection_1
+const MultiValueMap = MultiValuedMap_1
 
-var multivaluemap = {
+const multivaluemap = {
   MultiValueMap,
   ArrayCollection: Collection.ArrayCollection,
   SetCollection: Collection.SetCollection,
-  Collection: Collection.Collection,
-};
+  Collection: Collection.Collection
+}
 
-module.exports = multivaluemap;
-//# sourceMappingURL=index.js.map
+module.exports = multivaluemap
+// # sourceMappingURL=index.js.map
