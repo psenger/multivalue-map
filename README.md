@@ -6,6 +6,75 @@ Additionally, it has slightly different semantics. Putting a value into the map 
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
+<!--START_SECTION:toc-->
+
+## Table of contents
+- [Multi Value Map](#multi-value-map)
+  * [Installation Instructions](#installation-instructions)
+  * [API](#api)
+    + [Collection](#collection)
+      - [Parameters](#parameters)
+      - [setValue](#setvalue)
+        * [Parameters](#parameters-1)
+      - [getValue](#getvalue)
+      - [iterator](#iterator)
+    + [ArrayCollection](#arraycollection)
+      - [setValue](#setvalue-1)
+        * [Parameters](#parameters-2)
+      - [getValue](#getvalue-1)
+    + [SetCollection](#setcollection)
+      - [setValue](#setvalue-2)
+        * [Parameters](#parameters-3)
+      - [getValue](#getvalue-2)
+    + [MultiValuedMapOption](#multivaluedmapoption)
+      - [Properties](#properties)
+    + [MultiValuedMap](#multivaluedmap)
+      - [Parameters](#parameters-4)
+      - [Examples](#examples)
+      - [set](#set)
+        * [Parameters](#parameters-5)
+        * [Examples](#examples-1)
+      - [setAll](#setall)
+        * [Parameters](#parameters-6)
+        * [Examples](#examples-2)
+      - [size](#size)
+        * [Examples](#examples-3)
+      - [has](#has)
+        * [Parameters](#parameters-7)
+        * [Examples](#examples-4)
+      - [delete](#delete)
+        * [Parameters](#parameters-8)
+        * [Examples](#examples-5)
+      - [clear](#clear)
+        * [Examples](#examples-6)
+      - [keys](#keys)
+      - [values](#values)
+      - [entries](#entries)
+        * [Examples](#examples-7)
+      - [get](#get)
+        * [Parameters](#parameters-9)
+        * [Examples](#examples-8)
+  * [Example Usage](#example-usage)
+  * [License](#license)
+  * [Deployment Steps](#deployment-steps)
+
+<!--END_SECTION:toc-->
+
+<!--START_SECTION:file:INSTALLATION.md-->
+## Installation Instructions
+
+```bash
+npm install @psenger/multivalue-map --save
+```
+
+or
+
+```bash
+yarn add @psenger/multivalue-map
+```
+
+<!--END_SECTION:file:INSTALLATION.md-->
+
 <!--START_SECTION:jsdoc-->
 ## API
 
@@ -335,21 +404,6 @@ for (let [key, values] of mvm.entries()) {
 ```
 
 <!--END_SECTION:file:TUTORIAL.md-->
-
-<!--START_SECTION:file:INSTALLATION.md-->
-## Installation Instructions
-
-```bash
-npm install @psenger/multivalue-map --save
-```
-
-or
-
-```bash
-yarn add @psenger/multivalue-map
-```
-
-<!--END_SECTION:file:INSTALLATION.md-->
 
 ## License
 
