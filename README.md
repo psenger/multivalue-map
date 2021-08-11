@@ -14,7 +14,7 @@ Additionally, it has slightly different semantics. Putting a value into the map 
 ### Collection
 
 Abstract class `Collection` must be implemented to be passed as the `option.valueType` in the
-MulitValueMap class constructor. This abstract class defines the behavior of the values stored
+MultiValueMap class constructor. This abstract class defines the behavior of the values stored
 in the MultiValueMap. When constructed, the `creator` parameter, a JavaScript Class,  will be
 called with the `new` operator and stored in a private variable, a reference variable, called
 `this._proxyObject`
@@ -22,10 +22,6 @@ called with the `new` operator and stored in a private variable, a reference var
 #### Parameters
 
 *   `creator` **Class** the class to construct internally
-
-**Meta**
-
-*   **version**: 1.1.1
 
 #### setValue
 
@@ -250,7 +246,7 @@ mvm.clear()
 
 Returns a new Iterator object that contains an array of \[key, \[value]] for each element in the Map object in insertion order.
 
-Returns **IterableIterator\<K>** 
+Returns **IterableIterator\<any>** 
 
 #### values
 
@@ -275,9 +271,9 @@ const mvn = new MultiValueMap(data);
 for (let [key, values] of mvn.entries()) {
   console.log(key, values.getValue());
 }
-> a [ '1', '2', '3' ]
-> b [ '4' ]
-> c [ '5', '6' ]
+// a [ '1', '2', '3' ]
+// b [ '4' ]
+// c [ '5', '6' ]
 ```
 
 Returns **IterableIterator<\[any, IterableIterator\<any>]>** 
@@ -384,9 +380,13 @@ SOFTWARE.
 
 ## Deployment Steps
 
+These are notes for deploying to NPM. I used `npmrc` to manage my NPM identities
+(`npm i npmrc -g` to install ). Then I created a new profile called `public` with
+(`npmrc -c public`) and then switch to it with `npmrc public`.
+
 * create a pull request from `dev` to `main`
 * check out `main`
 * `npm version patch -m "message here" or minor`
 * `npm publish --access public`
 * Then switch to `dev` branch
-* Then merge `main` into `dev` and push `dev` to origin
+* And then merge `main` into `dev` and push `dev` to origin
