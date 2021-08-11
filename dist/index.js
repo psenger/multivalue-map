@@ -1,25 +1,24 @@
-'use strict'
+'use strict';
 
 /*
  * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
  */
 
-const isNill = (value) => value === null || value === undefined
-const not = (fn) => (...args) => !fn(...args)
-const isSet = not(isNill)
+const isNill = (value) => value === null || value === undefined;
+const not = (fn) => (...args) => !fn(...args);
+const isSet = not(isNill);
 
 /**
  * Abstract class `Collection` must be implemented to be passed as the `option.valueType` in the
- * MulitValueMap class constructor. This abstract class defines the behavior of the values stored
+ * MultiValueMap class constructor. This abstract class defines the behavior of the values stored
  * in the MultiValueMap. When constructed, the `creator` parameter, a JavaScript Class,  will be
  * called with the `new` operator and stored in a private variable, a reference variable, called
  * `this._proxyObject`
  * @param {Class} creator - the class to construct internally
- * @version 1.1.1
  */
 class Collection$1 {
   constructor (creator) {
-    this._proxyObject = new creator()
+    this._proxyObject = new creator();
   }
 
   /**
@@ -56,7 +55,7 @@ class Collection$1 {
  */
 class ArrayCollection$1 extends Collection$1 {
   constructor () {
-    super(Array)
+    super(Array);
   }
 
   /**
@@ -66,7 +65,7 @@ class ArrayCollection$1 extends Collection$1 {
    */
   setValue (value) {
     if (isSet(value)) {
-      this._proxyObject.push(value)
+      this._proxyObject.push(value);
     }
   }
 
@@ -91,7 +90,7 @@ class ArrayCollection$1 extends Collection$1 {
  */
 class SetCollection extends Collection$1 {
   constructor () {
-    super(Set)
+    super(Set);
   }
 
   /**
@@ -100,7 +99,7 @@ class SetCollection extends Collection$1 {
    * @param {*} value - if you push null or undefined, it is ignored.
    */
   setValue (value) {
-    isSet(value) ? this._proxyObject.add(value) : undefined
+    isSet(value) ? this._proxyObject.add(value) : undefined;
   }
 
   /**
@@ -117,17 +116,17 @@ class SetCollection extends Collection$1 {
   }
 }
 
-const Collection_1 = {
+var Collection_1 = {
   Collection: Collection$1,
   ArrayCollection: ArrayCollection$1,
   SetCollection
-}
+};
 
 /*
  * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
  */
 
-const { ArrayCollection } = Collection_1
+const { ArrayCollection } = Collection_1;
 
 /**
  * A MultiValuedMap constructor option
@@ -163,8 +162,8 @@ const { ArrayCollection } = Collection_1
  */
 class MultiValuedMap {
   constructor (iterable, options = {}) {
-    this._valueType = options?.valueType || ArrayCollection
-    this.map = new Map()
+    this._valueType = options?.valueType || ArrayCollection;
+    this.map = new Map();
     if (iterable) {
       if (typeof iterable[Symbol.iterator] !== 'function') {
         throw new TypeError(`${iterable} is not iterable`)
@@ -173,13 +172,13 @@ class MultiValuedMap {
           if (typeof (kvp.entries) === 'undefined') {
             throw new TypeError('Iterator value a is not an entry object')
           }
-          const [key, values] = kvp
+          const [key, values] = kvp;
           if (Array.isArray(values)) {
             values.forEach(value => {
-              this.set(key, value)
-            })
+              this.set(key, value);
+            });
           } else {
-            this.set(key, values)
+            this.set(key, values);
           }
         }
       }
@@ -196,9 +195,9 @@ class MultiValuedMap {
    * mvm.set('D', 'E')
    */
   set (key, value) {
-    const existingValue = this.map.get(key) || new this._valueType()
-    existingValue.setValue(value)
-    this.map.set(key, existingValue) // the only reason I need to do this, if the existingValue doesnt exist
+    const existingValue = this.map.get(key) || new this._valueType();
+    existingValue.setValue(value);
+    this.map.set(key, existingValue); // the only reason I need to do this, if the existingValue doesnt exist
     return this
   }
 
@@ -216,7 +215,7 @@ class MultiValuedMap {
       throw new TypeError('values is not iterable')
     }
     for (const value of values) {
-      this.set(key, value)
+      this.set(key, value);
     }
     return this
   }
@@ -271,12 +270,12 @@ class MultiValuedMap {
    * mvm.clear()
    */
   clear () {
-    this.map.clear()
+    this.map.clear();
   }
 
   /**
    * Returns a new Iterator object that contains an array of [key, [value]] for each element in the Map object in insertion order.
-   * @returns {IterableIterator<K>}
+   * @returns {IterableIterator<*>}
    */
   keys () {
     return this.map.keys()
@@ -304,9 +303,9 @@ class MultiValuedMap {
    * for (let [key, values] of mvn.entries()) {
    *   console.log(key, values.getValue());
    * }
-   * > a [ '1', '2', '3' ]
-   * > b [ '4' ]
-   * > c [ '5', '6' ]
+   * // a [ '1', '2', '3' ]
+   * // b [ '4' ]
+   * // c [ '5', '6' ]
    */
   entries () {
     return this.map.entries()
@@ -327,19 +326,19 @@ class MultiValuedMap {
   }
 
   forEach (callBackFunction, thisArg) {
-    const cb = callBackFunction.bind(thisArg)
-    const self = this
-    this.map.forEach((value, key) => cb(value.getValue(), key, self), thisArg)
+    const cb = callBackFunction.bind(thisArg);
+    const self = this;
+    this.map.forEach((value, key) => cb(value.getValue(), key, self), thisArg);
   }
 
   [Symbol.iterator] () {
-    const iterator = this.map.keys()
+    const iterator = this.map.keys();
     const getValue = key => {
       return this.map.get(key).getValue()
-    }
+    };
     return {
       next () {
-        const { value: key, done } = iterator.next()
+        const { value: key, done } = iterator.next();
         if (done) {
           return { value: [], done: true }
         }
@@ -349,21 +348,21 @@ class MultiValuedMap {
   }
 }
 
-const MultiValuedMap_1 = MultiValuedMap
+var MultiValuedMap_1 = MultiValuedMap;
 
 /*
  * Copyright (c) 2021, Philip A Senger (https://github.com/psenger/multivaluemap/blob/development/LICENSE)
  */
 
-const Collection = Collection_1
-const MultiValueMap = MultiValuedMap_1
+const Collection = Collection_1;
+const MultiValueMap = MultiValuedMap_1;
 
-const multivaluemap = {
+var multivaluemap = {
   MultiValueMap,
   ArrayCollection: Collection.ArrayCollection,
   SetCollection: Collection.SetCollection,
   Collection: Collection.Collection
-}
+};
 
-module.exports = multivaluemap
-// # sourceMappingURL=index.js.map
+module.exports = multivaluemap;
+//# sourceMappingURL=index.js.map
