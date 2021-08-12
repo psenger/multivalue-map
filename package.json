@@ -16,7 +16,7 @@
     "ci": "npm install --verbose && jest --ci --coverage && codecov",
     "test": "jest --coverage --verbose src",
     "test:cover": "jest src --coverage",
-    "test:lint": "standard \"src/com/cngr/multivaluemap/index.js\"",
+    "test:lint": "standard --env jest \"src/com/cngr/multivaluemap/*.js\"",
     "test:updatesnapshot": "jest --updateSnapshot",
     "build": "rollup --config && npm run docs",
     "prebuild": "npm run clean",

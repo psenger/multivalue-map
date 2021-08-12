@@ -13,11 +13,11 @@ const isSet = not(isNill)
  * in the MultiValueMap. When constructed, the `creator` parameter, a JavaScript Class,  will be
  * called with the `new` operator and stored in a private variable, a reference variable, called
  * `this._proxyObject`
- * @param {Class} creator - the class to construct internally
+ * @param {Class} Creator - the class to construct internally
  */
 class Collection {
-  constructor (creator) {
-    this._proxyObject = new creator()
+  constructor (Creator) {
+    this._proxyObject = new Creator()
   }
 
   /**
@@ -98,7 +98,9 @@ class SetCollection extends Collection {
    * @param {*} value - if you push null or undefined, it is ignored.
    */
   setValue (value) {
-    isSet(value) ? this._proxyObject.add(value) : undefined
+    if (isSet(value)) {
+      this._proxyObject.add(value)
+    }
   }
 
   /**
