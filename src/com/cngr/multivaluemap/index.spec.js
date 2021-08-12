@@ -489,7 +489,7 @@ describe('Test Suite', () => {
         const fixture = new FooCollection()
         expect(() => {
           for (const x of fixture) {
-            console.log('boom')
+            console.log('boom', x)
           }
         }).toThrow()
       })
