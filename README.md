@@ -1,21 +1,31 @@
-# Multi Value Map
+<div align="center">
 
-[![npm version](https://img.shields.io/npm/v/@psenger/multivalue-map.svg)](https://www.npmjs.com/package/@psenger/multivalue-map)
+# @psenger/multivalue-map
+
+**An ES6 Map where each key holds a collection of values, not just one.**
+
+[![Node.js CI](https://github.com/psenger/multivalue-map/actions/workflows/test.yml/badge.svg)](https://github.com/psenger/multivalue-map/actions/workflows/test.yml)
+[![npm](https://img.shields.io/npm/v/@psenger/multivalue-map.svg)](https://www.npmjs.com/package/@psenger/multivalue-map)
 [![Node.js >= 22](https://img.shields.io/badge/node-%3E%3D22-brightgreen.svg)](https://nodejs.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
-A Multi Value Map is an ES6 `Map` where each key holds a collection of values rather than a single value. Putting a value into the map appends it to the key's collection. Getting a value returns the full collection as an `Array`.
+[Installation](#installation-instructions) • [API](#api) • [Usage](#example-usage) • [Contributing](./CONTRIBUTING.md) • [Security](./SECURITY.md)
 
-The cardinality of each key's collection is controlled by a pluggable `Collection` class: use `ArrayCollection` to allow duplicates, or `SetCollection` to enforce uniqueness among primitives.
+</div>
+
+---
+
+`@psenger/multivalue-map` is a lightweight ES6 `Map` extension where each key maps to a _collection_ of values rather than a single one. Based on the [Multimap](https://en.wikipedia.org/wiki/Multimap) abstract data type, it lets you `set` multiple values per key and `get` them back as an array. The collection type is pluggable: use `ArrayCollection` (default) to preserve duplicates, or `SetCollection` to enforce uniqueness among primitive values.
 
 <!--START_SECTION:toc-->
 
 ## Table of contents
-- [Multi Value Map](#multi-value-map)
+- [@psenger/multivalue-map](#psengermultivalue-map)
   * [Installation Instructions](#installation-instructions)
   * [API](#api)
   * [Example Usage](#example-usage)
+  * [Development](#development)
   * [License](#license)
 
 <!--END_SECTION:toc-->
@@ -60,6 +70,18 @@ for (let [key, values] of mvm.entries()) {
 
 <!--END_SECTION:file:TUTORIAL.md-->
 
+## Development
+
+```bash
+git clone https://github.com/psenger/multivalue-map.git
+cd multivalue-map
+nvm use
+npm install
+npm test
+```
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full development and contribution guide.
+
 ## License
 
 <!--START_SECTION:file:LICENSE-->
@@ -87,4 +109,12 @@ SOFTWARE.
 
 <!--END_SECTION:file:LICENSE-->
 
-MIT © [psenger](https://github.com/psenger)
+---
+
+<div align="center">
+
+**A multi-value map for Node.js — when one value per key is not enough.**
+
+[Report Bug](https://github.com/psenger/multivalue-map/issues/new?template=bug_report.yml) • [Request Feature](https://github.com/psenger/multivalue-map/issues/new?template=feature_request.yml) • [npm](https://www.npmjs.com/package/@psenger/multivalue-map)
+
+</div>
